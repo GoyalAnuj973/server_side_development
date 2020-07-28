@@ -91,7 +91,7 @@ dishRouter.route('/:dishId/comments')
             err.status = 404;
             return next(err);
         }
-    }, (err) => next(err))
+    }, (err) => next(err)) 
     .catch((err) => next(err));
 })
 .post((req, res, next) => {
