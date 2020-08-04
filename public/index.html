@@ -1,6 +1,55 @@
 <html>
     <title>This is index.html</title>
     <body>
+        <script>
+            function statusChangeCallback(response) {
+                console.log('statusChangeCallback');
+                console.log(response);
+
+                if(response.status === 'connected') {
+                    testAPI();
+                }
+                else{
+                    document.getElementById('status').innerHTML = 'Please login into this app.';
+                }
+            }
+            function checkLoginState() {
+                FB.getLoginStatus(function(response){
+                    statusChangeCallback(response);
+                });
+            }
+
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appID : '290568405728997',
+                    xfbml : true,
+                    version : 'v2.10'
+                });
+                FB.AppEvents.logPageView();
+
+                FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+            };
+
+            (function(d, s, id){
+                var js, fjs = d.getElementByTagName(s) [0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+            function testAPI() {
+                console.log('Welcome! Fetching your information.... ');
+                FB.api('/me', function(response){
+                    console.log('Succesful login for: ' + response.name);
+                    document.getElementById('status').innerHTML = 
+                        'Thanks for logging in, ' + response.name + '!';
+                });
+            }
+        </script>
+            
         <h1>Index.html</h1>
             <p>This is the contents of this file</p>
     </body>
